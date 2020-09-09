@@ -183,6 +183,12 @@ namespace HumaneSociety
             newEmployee.Email = email;
         }
 
+        internal static List<Employee> GetEmployees()
+        {
+            List<Employee> allEmployees = db.Employees.ToList();
+
+            return allEmployees;
+        }
 
 
 
@@ -213,6 +219,8 @@ namespace HumaneSociety
             // submit changes
             db.SubmitChanges();
         }
+
+
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
