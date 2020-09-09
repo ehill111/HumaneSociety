@@ -160,12 +160,26 @@ namespace HumaneSociety
             return employeeWithUserName != null;
         }
 
-
-        //// TODO Items: ////
-        
-        // TODO: Allow any of the CRUD operations to occur here
-        internal static void RunEmployeeQueries(Employee employee, string crudOperation)
+        internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email)
         {
+            Employee newEmployee = new Employee();
+
+            newEmployee.FirstName = firstName;
+            newEmployee.LastName = lastName;
+            newEmployee.UserName = username;
+            newEmployee.Password = password;
+            newEmployee.EmployeeNumber = employeeNumber;
+            newEmployee.Email = email;
+        }
+
+
+
+            //// TODO Items: ////
+
+            // TODO: Allow any of the CRUD operations to occur here
+            internal static void RunEmployeeQueries(Employee employee, string crudOperation)
+        {
+            //take crud operation passed in and apply it to the customer passed in
             throw new NotImplementedException();
         }
 
