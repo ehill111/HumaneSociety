@@ -199,7 +199,7 @@ namespace HumaneSociety
 
             try
             {
-                employeeFromDb = db.Employees.Where(c => c.EmployeeId == employeeWithUpdates.EmployeeId).Single();
+                employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeWithUpdates.EmployeeId).Single();
             }
             catch (InvalidOperationException e)
             {
@@ -217,6 +217,12 @@ namespace HumaneSociety
             employeeFromDb.Email = employeeWithUpdates.Email;
 
             // submit changes
+            db.SubmitChanges();
+        }
+
+        internal static void RemoveEmployee(Employee employee)
+        {
+            Employee EmployeeToRemove = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
             db.SubmitChanges();
         }
 
