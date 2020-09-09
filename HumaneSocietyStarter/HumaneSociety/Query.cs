@@ -160,9 +160,37 @@ namespace HumaneSociety
             return employeeWithUserName != null;
         }
 
+        //internal static void UpdateEmployee(Employee employeeWithUpdates)
+        //{
+        //    // find corresponding Client from Db
+        //    Client employeeFromDb = null;
+
+        //    try
+        //    {
+        //        employeeFromDb = db.Employees.Where(c => c.EmployeeId == employeeWithUpdates.EmployeeId).Single();
+        //    }
+        //    catch (InvalidOperationException e)
+        //    {
+        //        Console.WriteLine("No clients have a ClientId that matches the Client passed in.");
+        //        Console.WriteLine("No update have been made.");
+        //        return;
+        //    }
+
+            //// update clientFromDb information with the values on clientWithUpdates (aside from address)
+            //clientFromDb.FirstName = clientWithUpdates.FirstName;
+            //clientFromDb.LastName = clientWithUpdates.LastName;
+            //clientFromDb.UserName = clientWithUpdates.UserName;
+            //clientFromDb.Password = clientWithUpdates.Password;
+            //clientFromDb.Email = clientWithUpdates.Email;
+
+           
+                db.SubmitChanges();
+
+               
+        }
 
         //// TODO Items: ////
-        
+
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {

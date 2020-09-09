@@ -1,0 +1,5 @@
+INSERT INTO Animals VALUES('Sammy', 30, 2, 'Friendly', 1, 1, 'Female', 'Available', 1, 1, 1)
+INSERT INTO Animals VALUES('Elvis', 80, 4, 'Shy', 1, 1, 'Male', 'Available', 2, 2, 2)
+INSERT INTO Animals VALUES('Fred', 350, 5, 'Friendly', 1, 1, 'Male', 'Available', 3, 3, 3)
+INSERT INTO Animals VALUES('Claw', 350, 3, 'Aggressive', 0, 0, 'Female', 'Unavailable', 4, 4, 4)
+INSERT INTO Animals VALUES('Yogi', 800, 5, 'Friendly', 0, 0, 'Male', 'Unavailable', 5, 5, 5)
