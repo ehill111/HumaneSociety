@@ -190,6 +190,19 @@ namespace HumaneSociety
             return allEmployees;
         }
 
+        internal static Employee RetrieveEmployeeFNameAndLName(string firstName, string lastName)
+        {
+            Employee employeeFromDb = db.Employees.Where(e => e.FirstName == firstName && e.LastName == lastName).FirstOrDefault();
+
+            if (employeeFromDb == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                return employeeFromDb;
+            }
+        }
 
 
         internal static void UpdateEmployee(Employee employeeWithUpdates)
