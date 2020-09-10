@@ -317,7 +317,17 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            var RemoveAnimal =
+                from m in db.Animals
+                where m.AnimalId == animal.AnimalId
+                select m;
+
+            foreach (var item in RemoveAnimal)
+            {
+                db.Animals.DeleteOnSubmit(item);
+            }
+
+            db.SubmitChanges();
         }
 
         // TODO: Animal Multi-Trait Search
@@ -325,6 +335,7 @@ namespace HumaneSociety
         {
             IQueryable<Animal> animalsThatFitCriterion = new IQueryable<Animal>();
             //trying stuff out
+
             IQueryable<Animal> animals = GetAnimals();
             foreach (KeyValuePair<int, string> valuePair in updates)
             {
@@ -344,6 +355,8 @@ namespace HumaneSociety
                 select animal.Name;
 
             return animalsThatFitCriterion;
+
+            
         }
 
         // TODO: Misc Animal Things
