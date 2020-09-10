@@ -164,15 +164,40 @@ namespace HumaneSociety
         //// TODO Items: ////
 
         // TODO: Allow any of the CRUD operations to occur here
+        //public void GetEmployeeOperation()
+        //{
+        //    List<string> options = new List<string>() { "What would you like to do? (select number of choice)", "1. Add animal", "2. Remove Anmial", "3. Check Animal Status", "4. Approve Adoption" };
+        //    UserInterface.DisplayUserOptions(options);
+            
+            
+        //}
+
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
-        {
-            //take crud operation passed in and apply it to the customer passed in
+        {//take crud operation passed in and apply it to the customer passed in
+            string create;
+            string read;
+            string update;
+            string delete;
+
+            switch (choice)
+            {   
+                             
+                case "create":
+                
+                case "read":
+
+                case "update":
+
+                case "delete":
+
+            }
+
             throw new NotImplementedException();
         }
 
 
         internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email)
-        {
+        {//Create
             Employee newEmployee = new Employee();
 
             newEmployee.FirstName = firstName;
@@ -184,14 +209,14 @@ namespace HumaneSociety
         }
 
         internal static List<Employee> GetEmployees()
-        {
+        {//read
             List<Employee> allEmployees = db.Employees.ToList();
 
             return allEmployees;
         }
 
         internal static Employee RetrieveEmployeeFNameAndLName(string firstName, string lastName)
-        {
+        {//Ignore
             Employee employeeFromDb = db.Employees.Where(e => e.FirstName == firstName && e.LastName == lastName).FirstOrDefault();
 
             if (employeeFromDb == null)
@@ -206,7 +231,7 @@ namespace HumaneSociety
 
 
         internal static void UpdateEmployee(Employee employeeWithUpdates)
-        {
+        {//Update
             // find corresponding Employee from Db
             Employee employeeFromDb = null;
 
@@ -234,6 +259,7 @@ namespace HumaneSociety
         }
 
         internal static void RemoveEmployee(Employee employee)
+
         {
 
             var RemoveEmployee =
@@ -248,6 +274,7 @@ namespace HumaneSociety
                 
             //Employee EmployeeToRemove = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
             //db.Employees.DeleteOnSubmit(employee);
+
             db.SubmitChanges();
         }
 
