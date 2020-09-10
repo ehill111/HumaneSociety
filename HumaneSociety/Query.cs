@@ -180,10 +180,10 @@ namespace HumaneSociety
             string delete;
 
             switch (choice)
-            {   
-                             
+            {
+
                 case "create":
-                
+
                 case "read":
 
                 case "update":
@@ -269,11 +269,10 @@ namespace HumaneSociety
 
             foreach (var item in RemoveEmployee)
             {
-                db.Employees.DeleteOnSubmit(employee);
+                db.Employees.DeleteOnSubmit(item);
             }
                 
-            //Employee EmployeeToRemove = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
-            //db.Employees.DeleteOnSubmit(employee);
+            
 
             db.SubmitChanges();
         }
