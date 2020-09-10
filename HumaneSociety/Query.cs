@@ -235,7 +235,19 @@ namespace HumaneSociety
 
         internal static void RemoveEmployee(Employee employee)
         {
-            Employee EmployeeToRemove = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
+
+            var RemoveEmployee =
+                from m in db.Employees
+                where m.EmployeeId == employee.EmployeeId
+                select m;
+
+            foreach (var item in RemoveEmployee)
+            {
+                db.Employees.DeleteOnSubmit(employee);
+            }
+                
+            //Employee EmployeeToRemove = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
+            //db.Employees.DeleteOnSubmit(employee);
             db.SubmitChanges();
         }
 
