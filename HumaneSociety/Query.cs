@@ -293,10 +293,21 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
+        internal static List<Animal> GetAnimals()
+        {
+            List<Animal> allAnimals = db.Animals.ToList();
+
+            return allAnimals;
+        }
+
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+
+            Animal animal = db.Animals.Where(a => a.AnimalId == id).Single();
+
+            return animal;
         }
+        
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
