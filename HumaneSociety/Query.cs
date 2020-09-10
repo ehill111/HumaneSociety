@@ -180,16 +180,16 @@ namespace HumaneSociety
             
                 switch (crudOperation)
                 {
-                    case "Add":
+                    case "add":
                         AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee.EmployeeNumber, employee.Email);
                         break;
-                    case "Get":
+                    case "get":
                         GetEmployees();
                         break;
-                    case "Update":
+                    case "update":
                         UpdateEmployee(employee);
                         break;
-                    case "Delete":
+                    case "delete":
                         RemoveEmployee(employee);
                         break;
                     default:
@@ -292,10 +292,21 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
+        internal static List<Animal> GetAnimals()
+        {
+            List<Animal> allAnimals = db.Animals.ToList();
+
+            return allAnimals;
+        }
+
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+
+            Animal animal = db.Animals.Where(a => a.AnimalId == id).Single();
+
+            return animal;
         }
+        
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
