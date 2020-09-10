@@ -293,9 +293,9 @@ namespace HumaneSociety
 
         }
 
-        internal static List<Animal> GetAnimals()
+        internal static IQueryable<Animal> GetAnimals()
         {
-            List<Animal> allAnimals = db.Animals.ToList();
+            IQueryable<Animal> allAnimals = db.Animals;
 
             return allAnimals;
         }
@@ -323,10 +323,27 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
+            IQueryable<Animal> animalsThatFitCriterion = new IQueryable<Animal>();
             //trying stuff out
-            var animals = GetAnimals();
-            var animalName = from animal in animals select animal.Name;
-            throw new NotImplementedException();
+            IQueryable<Animal> animals = GetAnimals();
+            foreach (KeyValuePair<int, string> valuePair in updates)
+            {
+
+                if (valuePair.Key == 1)
+                {
+                     animalsThatFitCriterion = animals.SkipWhile(a => a.CategoryId.ToString() != valuePair.Value);
+                }
+                
+            }
+            
+
+            
+            var animalName = 
+                from animal in animals
+                where animal. == updates.Values
+                select animal.Name;
+
+            return animalsThatFitCriterion;
         }
 
         // TODO: Misc Animal Things
