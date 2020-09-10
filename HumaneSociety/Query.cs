@@ -213,6 +213,9 @@ namespace HumaneSociety
             newEmployee.Password = password;
             newEmployee.EmployeeNumber = employeeNumber;
             newEmployee.Email = email;
+
+            db.Employees.InsertOnSubmit(newEmployee);
+            db.SubmitChanges();
         }
 
         internal static List<Employee> GetEmployees()
@@ -322,6 +325,9 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
+            //trying stuff out
+            var animals = GetAnimals();
+            var animalName = from animal in animals select animal.Name;
             throw new NotImplementedException();
         }
 
