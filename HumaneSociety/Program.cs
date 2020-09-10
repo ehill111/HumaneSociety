@@ -14,7 +14,7 @@ namespace HumaneSociety
             //Employee employee = new Employee();
             //employee.EmployeeId = 6;
 
-
+            //Query.RunEmployeeQueries(Employee employee, string crudOperation);
 
             //Query.RemoveEmployee(employee);
         }
