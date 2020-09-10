@@ -181,7 +181,7 @@ namespace HumaneSociety
                 switch (crudOperation )
                 {
                     case "Add":
-                        AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email);
+                        AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee. EmployeeNumber , employee.Email);
                         break;
                     case "Get":
                         GetEmployees();
@@ -203,7 +203,7 @@ namespace HumaneSociety
         }
 
 
-        internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email)
+        internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int? employeeNumber, string email)
         {//Create
             Employee newEmployee = new Employee();
 
