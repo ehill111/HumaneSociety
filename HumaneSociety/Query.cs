@@ -180,16 +180,16 @@ namespace HumaneSociety
             
                 switch (crudOperation)
                 {
-                    case "Add":
+                    case "add":
                         AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee.EmployeeNumber, employee.Email);
                         break;
-                    case "Get":
+                    case "get":
                         GetEmployees();
                         break;
-                    case "Update":
+                    case "update":
                         UpdateEmployee(employee);
                         break;
-                    case "Delete":
+                    case "delete":
                         RemoveEmployee(employee);
                         break;
                     default:
@@ -278,17 +278,18 @@ namespace HumaneSociety
             {
                 db.Employees.DeleteOnSubmit(item);
             }
-                
-            
-
+      
             db.SubmitChanges();
         }
-
-
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
+            Animal animal = new Animal();
+
+            animal.
+           
+            
             throw new NotImplementedException();
         }
 
