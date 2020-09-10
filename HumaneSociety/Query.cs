@@ -293,9 +293,9 @@ namespace HumaneSociety
 
         }
 
-        internal static IQueryable<Animal> GetAnimals()
+        internal static List<Animal> GetAnimals()
         {
-            IQueryable<Animal> allAnimals = db.Animals;
+            List<Animal> allAnimals = db.Animals.ToList();
 
             return allAnimals;
         }
@@ -326,25 +326,72 @@ namespace HumaneSociety
             {
                 db.Animals.DeleteOnSubmit(item);
             }
-
+            
             db.SubmitChanges();
         }
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        internal static List<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            IQueryable<Animal> animalsThatFitCriterion = new IQueryable<Animal>();
+            List<Animal> animalsThatFitCriterion = null;
+            List<Animal> animalThatFitsAllCriteria = null;
+
             //trying stuff out
 
-            IQueryable<Animal> animals = GetAnimals();
+            List<Animal> animals = GetAnimals();
             foreach (KeyValuePair<int, string> valuePair in updates)
             {
 
                 if (valuePair.Key == 1)
                 {
-                     animalsThatFitCriterion = animals.SkipWhile(a => a.CategoryId.ToString() != valuePair.Value);
+                     animalsThatFitCriterion = animals.SkipWhile(a => a.CategoryId.ToString() != valuePair.Value).ToList();
                 }
-                
+
+                else if (valuePair.Key == 2)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.Name != valuePair.Value).ToList();
+                }
+
+                else if (valuePair.Key == 3)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.Age.ToString() != valuePair.Value).ToList();
+                }
+
+                else if (valuePair.Key == 4)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.Demeanor != valuePair.Value).ToList();
+                }
+                else if (valuePair.Key == 5)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.KidFriendly.ToString() != valuePair.Value).ToList();
+                }
+
+                else if (valuePair.Key == 6)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.PetFriendly.ToString() != valuePair.Value).ToList();
+                }
+
+                else if (valuePair.Key == 7)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.Weight.ToString() != valuePair.Value).ToList();
+                }
+
+                else if (valuePair.Key == 8)
+                {
+                    animalsThatFitCriterion = animals.SkipWhile(a => a.AnimalId.ToString() != valuePair.Value).ToList();
+                }
+
+                if (animalThatFitsAllCriteria == null )
+                {
+
+                }
+                else
+                {
+                    foreach (Animal animal in animalsThatFitCriterion)
+                    {
+                        
+                    }
+                }
             }
             
 
@@ -354,7 +401,7 @@ namespace HumaneSociety
                 where animal. == updates.Values
                 select animal.Name;
 
-            return animalsThatFitCriterion;
+            return animalThatFitsAllCriteria;
 
             
         }
