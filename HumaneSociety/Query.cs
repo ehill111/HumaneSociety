@@ -178,23 +178,23 @@ namespace HumaneSociety
             //Console.WriteLine("Select the number of the employee action.", "1. Add Employee Record", "2. Get Employee Record", "3. Update Employee Record", "4. Delete Employee Record");
             //int action = int.Parse(Console.ReadLine());
             
-                switch (crudOperation )
+                switch (crudOperation)
                 {
                     case "Add":
-                        AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email);
+                        AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee.EmployeeNumber, employee.Email);
                         break;
                     case "Get":
                         GetEmployees();
                         break;
                     case "Update":
-                        UpdateEmployee(Employee employeeWithUpdates);
+                        UpdateEmployee(employee);
                         break;
                     case "Delete":
-                        //Delete method goes here.
+                        RemoveEmployee(employee);
                         break;
                     default:
                         UserInterface.DisplayUserOptions("Input not accepted please try again");
-                        RunEmployeeQueries(Employee employee, string crudOperation);
+                        RunEmployeeQueries(employee, crudOperation);
                         break;
                 }
            
@@ -203,7 +203,7 @@ namespace HumaneSociety
         }
 
 
-        internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email)
+        internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int? employeeNumber, string email)
         {//Create
             Employee newEmployee = new Employee();
 
