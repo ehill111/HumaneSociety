@@ -174,24 +174,29 @@ namespace HumaneSociety
 
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {//take crud operation passed in and apply it to the customer passed in
-            string create;
-            string read;
-            string update;
-            string delete;
-
-            switch (choice)
-            {   
-                             
-                case "create":
-                
-                case "read":
-
-                case "update":
-
-                case "delete":
-
-            }
-
+            //Console.WriteLine("Select the number of the employee action.", "1. Add Employee Record", "2. Get Employee Record", "3. Update Employee Record", "4. Delete Employee Record");
+            //int action = int.Parse(Console.ReadLine());
+            
+                switch (crudOperation )
+                {
+                    case "Add":
+                        AddNewEmployee(string firstName, string lastName, string username, string password, int employeeNumber, string email);
+                        break;
+                    case "Get":
+                        GetEmployees();
+                        break;
+                    case "Update":
+                        UpdateEmployee(Employee employeeWithUpdates);
+                        break;
+                    case "Delete":
+                        //Delete method goes here.
+                        break;
+                    default:
+                        UserInterface.DisplayUserOptions("Input not accepted please try again");
+                        RunEmployeeQueries(Employee employee, string crudOperation);
+                        break;
+                }
+           
             throw new NotImplementedException();
         }
 
