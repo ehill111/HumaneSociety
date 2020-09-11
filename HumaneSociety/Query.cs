@@ -180,10 +180,10 @@ namespace HumaneSociety
             
                 switch (crudOperation)
                 {
-                    case "add":
+                    case "create":
                         AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee.EmployeeNumber, employee.Email);
                         break;
-                    case "get":
+                    case "read":
                         GetEmployees();
                         break;
                     case "update":
@@ -202,7 +202,6 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-
         internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int? employeeNumber, string email)
         {//Create
             Employee newEmployee = new Employee();
@@ -217,7 +216,6 @@ namespace HumaneSociety
             db.Employees.InsertOnSubmit(newEmployee);
             db.SubmitChanges();
         }
-
         internal static List<Employee> GetEmployees()
         {//read
             List<Employee> allEmployees = db.Employees.ToList();
@@ -225,7 +223,7 @@ namespace HumaneSociety
             return allEmployees;
         }
 
-        internal static Employee RetrieveEmployeeFNameAndLName(string firstName, string lastName)
+        internal static Employee RetrieveEmployeeFirstNameAndLastName(string firstName, string lastName)
         {//Ignore
             Employee employeeFromDb = db.Employees.Where(e => e.FirstName == firstName && e.LastName == lastName).FirstOrDefault();
 
@@ -238,7 +236,6 @@ namespace HumaneSociety
                 return employeeFromDb;
             }
         }
-
 
         internal static void UpdateEmployee(Employee employeeWithUpdates)
         {//Update
@@ -267,17 +264,16 @@ namespace HumaneSociety
             // submit changes
             db.SubmitChanges();
         }
-
         internal static void RemoveEmployee(Employee employee)
 
         {
 
-            var RemoveEmployee =
+            var removeEmployee =
                 from m in db.Employees
                 where m.EmployeeId == employee.EmployeeId
                 select m;
 
-            foreach (var item in RemoveEmployee)
+            foreach (var item in removeEmployee)
             {
                 db.Employees.DeleteOnSubmit(item);
             }
@@ -308,7 +304,6 @@ namespace HumaneSociety
             return animal;
         }
         
-
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
             
@@ -317,12 +312,12 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            var RemoveAnimal =
+            var removeAnimal =
                 from m in db.Animals
                 where m.AnimalId == animal.AnimalId
                 select m;
 
-            foreach (var item in RemoveAnimal)
+            foreach (var item in removeAnimal)
             {
                 db.Animals.DeleteOnSubmit(item);
             }
@@ -334,7 +329,7 @@ namespace HumaneSociety
         internal static List<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             List<Animal> animalsThatFitCriterion = null;
-            List<Animal> animalThatFitsAllCriteria = null;
+            List<Animal> animalSearched = GetAnimals();
 
             //trying stuff out
 
@@ -381,79 +376,151 @@ namespace HumaneSociety
                     animalsThatFitCriterion = animals.SkipWhile(a => a.AnimalId.ToString() != valuePair.Value).ToList();
                 }
 
-                if (animalThatFitsAllCriteria == null )
-                {
-
-                }
-                else
-                {
-                    foreach (Animal animal in animalsThatFitCriterion)
-                    {
-                        
-                    }
-                }
+                //I first added the animal searched with each animal and with each iteration it should remove all that does not apply anymore
+                animalSearched = animalSearched.SkipWhile(i => !animalsThatFitCriterion.Contains(i)).ToList();   
+              
             }
-            
 
-            
-            var animalName = 
-                from animal in animals
-                where animal. == updates.Values
-                select animal.Name;
-
-            return animalThatFitsAllCriteria;
-
+              return animalSearched;
             
         }
 
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            Category category = db.Categories.Where(c => c.CategoryId == categoryName);
-            return  ;
-            
+            Category category = db.Categories.Where(c => c.Name == categoryName).Single();
+            int categoryId = category.CategoryId;
+            return categoryId;
         }
 
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            Room room = db.Rooms.Where(r => r.AnimalId == animalId).SingleOrDefault();
+            return room;
         }
 
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName).Single();
+            int dietPlanId = dietPlan.DietPlanId;
+            return dietPlanId;
         }
 
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+
+            //combine client and animal
+            //use animal and client passed in to create new table
+
+
+            //ATTRIBUTES OF ADOPT:
+            //ClientId 
+            //AnimalId 
+            //ApprovalStatus
+            //AdoptionFee (75)
+            //PaymentCollected
+
+            Adoption adoption = new Adoption();
+
+            adoption.ClientId = client.ClientId;
+            adoption.AnimalId = animal.AnimalId;
+            adoption.ApprovalStatus = "Pending";
+            adoption.AdoptionFee = 75;
+            //after mvp comeback and fix hardcode
+            
+            if (UserInterface.GetBitData($"The adoption cost is {adoption.AdoptionFee}! Would you like to pay right now? \n" +
+                $"Type yes or no: "))
+            {
+                adoption.PaymentCollected = true;
+            }
+            else
+            {
+                adoption.PaymentCollected = false;
+            }
+
+            db.Adoptions.InsertOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            //after mvp come back and fix hardcode
+            IQueryable<Adoption> pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending"); 
+
+            return pendingAdoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if (isAdopted)
+            {
+                adoption.ApprovalStatus = "Adopted";
+                if (!(bool)adoption.PaymentCollected)
+                {
+                    UserInterface.DisplayUserOptions($"Your adoption was approved! The adoption cost is {adoption.AdoptionFee}!");
+                    adoption.PaymentCollected = true;
+                }
+                else
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was approved! Have a nice day!");
+                }
+            }
+            else if (!isAdopted)
+            {
+                adoption.ApprovalStatus = "Adoption Declined";
+                if ((bool)adoption.PaymentCollected)
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was declined! Your adoption fee will be returned to you!");
+                    adoption.PaymentCollected = false;
+                }
+                else
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was declined! Sorry have a nice day!");
+                }
+            }
+
+            db.SubmitChanges();
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var removeAdoption =
+                from a in db.Adoptions
+                where a.AnimalId == animalId && a.ClientId == clientId
+                select a;
+
+            foreach (var item in removeAdoption)
+            {
+                db.Adoptions.DeleteOnSubmit(item);
+            }
+
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            var animalsShots = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId);
+        
+            return animalsShots;
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+            //Shot table attributes:
+            //ShotId
+            //Name
+
+            //AnimalShot table attributes:
+            //AnimalId
+            //ShotId
+            //DateRecieved
+            AnimalShot animalShot = new AnimalShot();
+            Shot shot = db.Shots.Where(s => s.Name == shotName).First();
+            animalShot.AnimalId = animal.AnimalId;
+            animalShot.DateReceived = DateTime.Now;
+            db.SubmitChanges();
         }
     }
 }
