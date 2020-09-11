@@ -180,10 +180,10 @@ namespace HumaneSociety
             
                 switch (crudOperation)
                 {
-                    case "add":
+                    case "create":
                         AddNewEmployee(employee.FirstName, employee.LastName, employee.UserName, employee.Password, employee.EmployeeNumber, employee.Email);
                         break;
-                    case "get":
+                    case "read":
                         GetEmployees();
                         break;
                     case "update":
@@ -225,7 +225,7 @@ namespace HumaneSociety
             return allEmployees;
         }
 
-        internal static Employee RetrieveEmployeeFNameAndLName(string firstName, string lastName)
+        internal static Employee RetrieveEmployeeFirstNameAndLastName(string firstName, string lastName)
         {//Ignore
             Employee employeeFromDb = db.Employees.Where(e => e.FirstName == firstName && e.LastName == lastName).FirstOrDefault();
 
@@ -272,12 +272,12 @@ namespace HumaneSociety
 
         {
 
-            var RemoveEmployee =
+            var removeEmployee =
                 from m in db.Employees
                 where m.EmployeeId == employee.EmployeeId
                 select m;
 
-            foreach (var item in RemoveEmployee)
+            foreach (var item in removeEmployee)
             {
                 db.Employees.DeleteOnSubmit(item);
             }
@@ -317,12 +317,12 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            var RemoveAnimal =
+            var removeAnimal =
                 from m in db.Animals
                 where m.AnimalId == animal.AnimalId
                 select m;
 
-            foreach (var item in RemoveAnimal)
+            foreach (var item in removeAnimal)
             {
                 db.Animals.DeleteOnSubmit(item);
             }
@@ -508,18 +508,42 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var removeAdoption =
+                from a in db.Adoptions
+                where a.AnimalId == animalId && a.ClientId == clientId
+                select a;
+
+            foreach (var item in removeAdoption)
+            {
+                db.Adoptions.DeleteOnSubmit(item);
+            }
+
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            var animalsShots = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId);
+        
+            return animalsShots;
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+            //Shot table attributes:
+            //ShotId
+            //Name
+
+            //AnimalShot table attributes:
+            //AnimalId
+            //ShotId
+            //DateRecieved
+            AnimalShot animalShot = new AnimalShot();
+            Shot shot = db.Shots.Where(s => s.Name == shotName).First();
+            animalShot.AnimalId = animal.AnimalId;
+            animalShot.DateReceived = DateTime.Now;
+            db.SubmitChanges();
         }
     }
 }
