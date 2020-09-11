@@ -311,8 +311,43 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
-            
-            throw new NotImplementedException();
+
+            foreach (KeyValuePair<int, string> valuePair in updates)
+            {
+                Animal animal = db.Animals.Where(a => a.AnimalId == animalId).SingleOrDefault();
+
+                //Switch case here 
+                switch (valuePair.Key)
+                {
+                    case 1:
+                        //logic in here 
+                        break;
+                    case 2:
+                        
+                        break;
+                    case 3:
+                       
+                        break;
+                    case 4:
+                        
+                        break;
+                    case 5:
+                        
+                        break;
+                    case 6:
+                        
+                        break;
+                    case 7:
+                       
+                        break;
+                    case 8:
+                        
+                        break;
+                    default:
+                        
+                        break;
+                }
+            }
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -333,10 +368,11 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static List<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
-            List<Animal> animalsThatFitCriterion = null;
-            List<Animal> animalSearched = GetAnimals();
+
 
             //trying stuff out
+            List<Animal> animalsThatFitCriterion = null;
+            List<Animal> animalSearched = GetAnimals();
 
             List<Animal> animals = GetAnimals();
             foreach (KeyValuePair<int, string> valuePair in updates)
