@@ -202,7 +202,6 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-
         internal static void AddNewEmployee(string firstName, string lastName, string username, string password, int? employeeNumber, string email)
         {//Create
             Employee newEmployee = new Employee();
@@ -217,7 +216,6 @@ namespace HumaneSociety
             db.Employees.InsertOnSubmit(newEmployee);
             db.SubmitChanges();
         }
-
         internal static List<Employee> GetEmployees()
         {//read
             List<Employee> allEmployees = db.Employees.ToList();
@@ -238,7 +236,6 @@ namespace HumaneSociety
                 return employeeFromDb;
             }
         }
-
 
         internal static void UpdateEmployee(Employee employeeWithUpdates)
         {//Update
@@ -267,7 +264,6 @@ namespace HumaneSociety
             // submit changes
             db.SubmitChanges();
         }
-
         internal static void RemoveEmployee(Employee employee)
 
         {
@@ -308,7 +304,6 @@ namespace HumaneSociety
             return animal;
         }
         
-
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
 
@@ -419,12 +414,10 @@ namespace HumaneSociety
 
                 //I first added the animal searched with each animal and with each iteration it should remove all that does not apply anymore
                 animalSearched = animalSearched.SkipWhile(i => !animalsThatFitCriterion.Contains(i)).ToList();   
-                
+              
             }
-           
 
-            return animalSearched;
-
+              return animalSearched;
             
         }
 
@@ -434,7 +427,6 @@ namespace HumaneSociety
             Category category = db.Categories.Where(c => c.Name == categoryName).Single();
             int categoryId = category.CategoryId;
             return categoryId;
-            
         }
 
         internal static Room GetRoom(int animalId)
@@ -448,7 +440,6 @@ namespace HumaneSociety
             DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName).Single();
             int dietPlanId = dietPlan.DietPlanId;
             return dietPlanId;
-
         }
 
         // TODO: Adoption CRUD Operations
