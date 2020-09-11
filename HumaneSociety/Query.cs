@@ -409,7 +409,10 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            Category category = db.Categories.Where(a => a.Name == categoryName).Single();
+            int categoryId = category.CategoryId;
+            return categoryId;
+            
         }
 
         internal static Room GetRoom(int animalId)
