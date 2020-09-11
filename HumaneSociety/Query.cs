@@ -334,7 +334,7 @@ namespace HumaneSociety
         internal static List<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             List<Animal> animalsThatFitCriterion = null;
-            List<Animal> animalThatFitsAllCriteria = null;
+            List<Animal> animalSearched = GetAnimals();
 
             //trying stuff out
 
@@ -381,27 +381,13 @@ namespace HumaneSociety
                     animalsThatFitCriterion = animals.SkipWhile(a => a.AnimalId.ToString() != valuePair.Value).ToList();
                 }
 
-                if (animalThatFitsAllCriteria == null )
-                {
-
-                }
-                else
-                {
-                    foreach (Animal animal in animalsThatFitCriterion)
-                    {
-                        
-                    }
-                }
+                //I first added the animal searched with each animal and with each iteration it should remove all that does not apply anymore
+                animalSearched = animalSearched.SkipWhile(i => !animalsThatFitCriterion.Contains(i)).ToList();   
+                
             }
-            
+           
 
-            
-            var animalName = 
-                from animal in animals
-                where animal. == updates.Values
-                select animal.Name;
-
-            return animalThatFitsAllCriteria;
+            return animalSearched;
 
             
         }
