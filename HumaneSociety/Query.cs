@@ -432,7 +432,38 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+
+            //combine client and animal
+            //use animal and client passed in to create new table
+
+
+            //ATTRIBUTES OF ADOPT:
+            //ClientId 
+            //AnimalId 
+            //ApprovalStatus
+            //AdoptionFee (75)
+            //PaymentCollected
+
+            Adoption adoption = new Adoption();
+
+            adoption.ClientId = client.ClientId;
+            adoption.AnimalId = animal.AnimalId;
+            adoption.ApprovalStatus = "Pending";
+            adoption.AdoptionFee = 75;
+            
+            
+            if (UserInterface.GetBitData($"The adoption cost is {adoption.AdoptionFee}! Would you like to pay now? \n" +
+                $"Type yes or no: "))
+            {
+                adoption.PaymentCollected = true;
+            }
+            else
+            {
+                adoption.PaymentCollected = false;
+            }
+
+            db.Adoptions.InsertOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
