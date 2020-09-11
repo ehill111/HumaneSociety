@@ -409,7 +409,7 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            Category category = db.Categories.Where(a => a.Name == categoryName).Single();
+            Category category = db.Categories.Where(c => c.Name == categoryName).Single();
             int categoryId = category.CategoryId;
             return categoryId;
             
@@ -417,12 +417,16 @@ namespace HumaneSociety
 
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            Room room = db.Rooms.Where(r => r.AnimalId == animalId).SingleOrDefault();
+            return room;
         }
 
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName).Single();
+            int dietPlanId = dietPlan.DietPlanId;
+            return dietPlanId;
+
         }
 
         // TODO: Adoption CRUD Operations
