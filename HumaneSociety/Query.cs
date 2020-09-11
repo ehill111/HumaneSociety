@@ -450,9 +450,9 @@ namespace HumaneSociety
             adoption.AnimalId = animal.AnimalId;
             adoption.ApprovalStatus = "Pending";
             adoption.AdoptionFee = 75;
+            //after mvp comeback and fix hardcode
             
-            
-            if (UserInterface.GetBitData($"The adoption cost is {adoption.AdoptionFee}! Would you like to pay now? \n" +
+            if (UserInterface.GetBitData($"The adoption cost is {adoption.AdoptionFee}! Would you like to pay right now? \n" +
                 $"Type yes or no: "))
             {
                 adoption.PaymentCollected = true;
@@ -468,12 +468,42 @@ namespace HumaneSociety
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            //after mvp come back and fix hardcode
+            IQueryable<Adoption> pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending"); 
+
+            return pendingAdoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            if (isAdopted)
+            {
+                adoption.ApprovalStatus = "Adopted";
+                if (!(bool)adoption.PaymentCollected)
+                {
+                    UserInterface.DisplayUserOptions($"Your adoption was approved! The adoption cost is {adoption.AdoptionFee}!");
+                    adoption.PaymentCollected = true;
+                }
+                else
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was approved! Have a nice day!");
+                }
+            }
+            else if (!isAdopted)
+            {
+                adoption.ApprovalStatus = "Adoption Declined";
+                if ((bool)adoption.PaymentCollected)
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was declined! Your adoption fee will be returned to you!");
+                    adoption.PaymentCollected = false;
+                }
+                else
+                {
+                    UserInterface.DisplayUserOptions("Your adoption was declined! Sorry have a nice day!");
+                }
+            }
+
+            db.SubmitChanges();
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
